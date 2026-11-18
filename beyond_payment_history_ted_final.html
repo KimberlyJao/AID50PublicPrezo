@@ -654,7 +654,6 @@ body.controls #notes{bottom:68px!important}
 /* slide 9 phone form */
 .intro9{top:200px!important;width:420px!important}
 .intro9 h1{font-size:54px!important}
-.note9{margin:14px 0 0;font-size:16px;color:var(--muted-d);line-height:1.4}
 .ci{height:100%;top:0;border-top:0;display:flex;flex-direction:column;background:#f6f7f9;color:var(--ink);font-family:var(--sans);position:relative;text-align:left}
 .ci-top{padding:38px 14px 6px;display:flex;flex-direction:column;gap:2px}
 .ci-top b{font-size:15px;letter-spacing:-.01em}
@@ -905,23 +904,23 @@ body.controls #notes{bottom:68px!important}
   </div>
   <div class="b1layer">
     <div class="tag rv2" style="--d:0">Same-interview assessment · 15-input stacked ensemble · 2,262 holdout interviews</div>
-    <h1 class="rv2" style="--d:0">At a 0.50 cutoff, it caught most reported delays, with 412 false alarms</h1>
+    <h1 class="rv2" style="--d:0">At a 0.63 cutoff, it caught three in four reported delays, with 286 false alarms</h1>
     <div class="cmwrap">
       <div class="cmx rv2" style="--d:1">
-        <div class="axp">Model decision at cutoff 0.50</div>
+        <div class="axp">Model decision at balanced cutoff 0.63</div>
         <div class="axa"><span>Actual report</span></div>
-        <div class="cm" role="table" aria-label="Confusion matrix at cutoff 0.50, 2,262 holdout interviews">
+        <div class="cm" role="table" aria-label="Confusion matrix at balanced cutoff 0.63, 2,262 holdout interviews">
           <div role="row" class="cmr"><span role="columnheader"></span><span role="columnheader" class="ch">Flagged</span><span role="columnheader" class="ch">Not flagged</span></div>
           <div role="row" class="cmr"><span role="rowheader" class="rh">Reported a delay<small>1,444 interviews</small></span>
-            <span role="cell" class="cell good"><b class="num">1,255</b>Correctly flagged</span><span role="cell" class="cell miss"><b class="num">189</b>Missed</span></div>
+            <span role="cell" class="cell good"><b class="num">1,086</b>Correctly flagged</span><span role="cell" class="cell miss"><b class="num">358</b>Missed</span></div>
           <div role="row" class="cmr"><span role="rowheader" class="rh">No reported delay<small>818 interviews</small></span>
-            <span role="cell" class="cell fa"><b class="num">412</b>False alarm</span><span role="cell" class="cell ok"><b class="num">406</b>Correctly not flagged</span></div>
+            <span role="cell" class="cell fa"><b class="num">286</b>False alarm</span><span role="cell" class="cell ok"><b class="num">532</b>Correctly not flagged</span></div>
         </div>
       </div>
       <div class="cmm rv2" style="--d:3">
-        <div class="mt"><b class="num">75.3%</b><span>Precision · flagged interviews that reported a delay</span></div>
-        <div class="mt"><b class="num">86.9%</b><span>Recall · reported delays that were flagged</span></div>
-        <div class="mt"><b class="num">1,667</b><span>of 2,262 interviews flagged · 63.8% reported a delay</span></div>
+        <div class="mt"><b class="num">79.2%</b><span>Precision · flagged interviews that reported a delay</span></div>
+        <div class="mt"><b class="num">75.2%</b><span>Recall · reported delays that were flagged</span></div>
+        <div class="mt"><b class="num">1,372</b><span>of 2,262 interviews flagged · 63.8% reported a delay</span></div>
       </div>
     </div>
     <p class="limit rv2" style="--d:4">Same-interview assessment, not future bank delinquency.</p>
@@ -976,8 +975,7 @@ body.controls #notes{bottom:68px!important}
   <div class="b0layer">
     <div class="intro9">
       <h1 class="t9">A loan application for customers.</h1>
-      <div class="tag t9">Same questions as our prototype</div>
-      <p class="t9 note9">Sample demo. Answers are not saved, scored, or used for any decision.</p>
+      <div class="tag t9">Our prototype</div>
     </div>
     <div class="stage9">
       <div class="shadow9" aria-hidden="true"></div>
@@ -1111,7 +1109,7 @@ body.controls #notes{bottom:68px!important}
   <h2>References and notes</h2>
   <p><b>Data.</b> World Bank COVID-19 High-Frequency Phone Survey, Philippines, 2020–2021. Unweighted analysis. Households self-reported payment delays; the question has no fixed recall window.</p>
   <p><b>Study.</b> https://aid504-project.vercel.app/philippines/covid-payment-delays. Records from one household stayed in one group. Identification holdout: 2,262 interviews from 1,512 households. Forecasting holdout: 361 households. Macro ROC-AUC averages per-round scores.</p>
-  <p><b>Featured model.</b> 15-input stacked ensemble: logistic regression, LightGBM and CatBoost scores combined by a final logistic regression. Holdout macro ROC-AUC 0.788 (95% CI 0.764–0.811). The holdout had already been used for earlier models, so this is a consistency check, not an untouched test. Cutoff 0.50 set on development data. Permutation importance from the same model; the coping count excludes the delayed-payment item and overlaps with individual coping inputs.</p>
+  <p><b>Featured model.</b> 15-input stacked ensemble: logistic regression, LightGBM and CatBoost scores combined by a final logistic regression. Holdout macro ROC-AUC 0.788 (95% CI 0.764–0.811). The holdout had already been used for earlier models, so this is a consistency check, not an untouched test. Balanced cutoff 0.63 (Youden's J) set on development data before holdout scoring. Permutation importance from the same model; the coping count excludes the delayed-payment item and overlaps with individual coping inputs.</p>
   <p><b>Prototype.</b> https://aid504-project.vercel.app/philippines/early-warning. Lender workspace screenshots captured 18 Nov 2026 from sample households. The prototype scores applications with the 15-input stack refitted on Round 1 and Round 2 interviews (development cross-validation macro ROC-AUC 0.797; no holdout check). The phone demo on slide 9 uses the prototype's questions but does not save or score answers.</p>
   <p><b>Images.</b> Photographs are generated illustrations, not survey participants or bank customers. The bank dashboard and phone message use fictional sample data.</p>
 </section>
@@ -1148,7 +1146,7 @@ const NOTES=[
  {p:1,t:20,x:"So our question was simple. Can household finances tell us more than payment history? If they can, a lender could notice pressure sooner and target support better. Those benefits still need testing.",r:""},
  {p:1,t:20,x:"We asked two separate questions. First, can household answers identify a delay reported in the same interview? Second, can earlier answers help predict a delay reported later? A self-reported delay is not bank delinquency.",r:""},
  {p:1,t:20,x:"Every model was tested on households it had never seen. The identification test used 2,262 interviews from 1,512 households. The forecasting test used 361 households.",r:"Development: 9,055 interviews (identification) and 1,444 households (forecasting)."},
- {p:1,t:50,x:"How well did it work? Our featured model is a 15-input stacked ensemble. Logistic regression, LightGBM, and CatBoost each score a household, and a final logistic regression combines them. On the holdout it scored 0.788, close to the 80-input model at 0.792. ROC-AUC measures ranking, not accuracy, and this holdout had been used before, so treat it as a consistency check. [Click.] At a 0.50 cutoff, it flagged 1,667 interviews. Three in four flags were correct, and it caught 87 percent of reported delays. It also raised 412 false alarms.",r:"Precision 75.3% = 1,255 / 1,667 flagged. Recall 86.9% = 1,255 / 1,444 reported delays. Cutoff set on development data before holdout scoring; results apply to this cutoff and sample. Constant-score reference 0.500 is not a scored model."},
+ {p:1,t:50,x:"How well did it work? Our featured model is a 15-input stacked ensemble. Logistic regression, LightGBM, and CatBoost each score a household, and a final logistic regression combines them. On the holdout it scored 0.788, close to the 80-input model at 0.792. ROC-AUC measures ranking, not accuracy, and this holdout had been used before, so treat it as a consistency check. [Click.] At a balanced cutoff of 0.63, it flagged 1,372 interviews. About four in five flags were correct, and it caught three in four reported delays. It also raised 286 false alarms.",r:"Precision 79.2% = 1,086 / 1,372 flagged. Recall 75.2% = 1,086 / 1,444 reported delays. False-alarm rate 35.0% = 286 / 818. Balanced cutoff (Youden's J) set on development out-of-fold predictions before holdout scoring; results apply to this cutoff and sample. Constant-score reference 0.500 is not a scored model."},
  {p:1,t:35,x:"Forecasting is a separate and harder test, on 361 households. Prior delay alone scored 0.612. With household answers added, the Random Forest reached 0.653 and logistic regression 0.675. The point estimates improved, but the size of the gain remains uncertain. Julius will show what we built.",r:"A later report may describe a continuing delay, not a newly missed payment. Do not read overlapping intervals as a significance test."},
  {p:2,t:25,x:"Thank you, Kim. The strongest signal was how many coping actions a household used. Borrowing from family and worry about next month came next. These signals overlap, and they show what the model relies on, not what causes a delay.",r:"Values: 0.040, 0.021, 0.016 (study: 0.04008, 0.02078, 0.01606). The coping count excludes the delayed-payment item and overlaps with individual coping inputs. Permutation importance is not causation or an independent effect."},
  {p:2,t:45,x:"Here is how this could look. [Phone enters.] A customer applies for a loan in six steps: where they live, their work and income, the accounts they use, how they got by when money was tight, how they feel about next month's bills, and a few more questions the model needs. Prefer not to answer is offered on the sensitive questions. [Click.] On the lender side, our prototype scores each applicant and ranks the queue. Sample household PH-009 scores 94 and sits first, with the factors behind it and a suggested next step: offer a financial assessment. It supports a conversation, not a lending decision.",r:"The prototype scores with the 15-input stack refitted on Round 1 and Round 2 interviews only (development cross-validation macro ROC-AUC 0.797, no holdout check), which avoids the disputed Round 3 mapping. Tiers: Low below 63.9, Moderate 63.9 to 86.1, High 86.2 and above. Sample households are fictional. The phone demo on this slide uses the prototype's questions but does not save or score answers."},
