@@ -18,10 +18,8 @@ The on-screen controls are hidden by default. Keyboard shortcuts:
 | T | Start or pause the seven-minute timer |
 | H | Show or hide the presenter toolbar |
 
-Slides 6, 9, 13 and 14 have a second step that appears on the next arrow press. The customer check-in form and the bank dashboard are clickable during the demo.
+Slides 6, 9, 13 and 14 have a second step that appears on the next arrow press. The customer loan application form (the same questions as the prototype) and the bank dashboard are clickable during the demo.
 
 ## Notes
 
-- All images and screenshots are embedded. Only the "Open live prototype" link needs internet.
-- Photographs are generated illustrations, not survey participants or bank customers. The bank dashboard and phone message use fictional sample data.
 - Printing (Ctrl/Cmd + P) gives one slide or build step per page, plus a references page.
