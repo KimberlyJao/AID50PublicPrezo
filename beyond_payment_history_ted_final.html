@@ -146,6 +146,10 @@ h1{font-size:50px;font-weight:800;line-height:1.05;letter-spacing:-.032em;margin
 .clabels{position:absolute;left:56px;right:0;bottom:-18px;height:58px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:0 96px 0 20px;text-align:center}
 .clabels div{font-size:16px;font-weight:700;line-height:1.2}
 .clabels small{display:block;font-weight:500;color:var(--muted);font-size:13px}
+.forecast-slide .res{grid-template-columns:minmax(0,1fr) 290px;gap:38px}
+.forecast-slide :is(.cols,.clabels){grid-template-columns:1.18fr repeat(3,minmax(0,1fr));gap:12px!important;padding-left:8px;padding-right:82px}
+.forecast-slide .col.stack .bar{background:var(--amber)}
+.forecast-slide .col.stack .val{color:var(--amber-d)}
 .verdict{margin-top:14px;display:inline-flex;align-items:center;gap:10px;background:var(--amber-l);color:var(--amber-d);font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px}
 
 
@@ -476,6 +480,30 @@ h1{margin-bottom:18px}
 /* slide 6 */
 .s6{padding:0}
 .s6 .b0layer{padding:60px 80px 0}
+.s6 .bmidlayer{position:absolute;inset:0;z-index:1;background:var(--ivory);padding:60px 80px 0;
+  opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s linear .6s}
+.s6.bmid .b0layer{opacity:0;transform:scale(1.04)}
+.s6.bmid .bmidlayer{opacity:1;visibility:visible;transition:opacity .6s ease .1s}
+.stack-diagram{width:1020px;height:280px;margin:68px auto 0;display:grid;align-items:center;
+  grid-template-columns:170px 72px 242px 72px 226px 56px 182px;--connector:#8299a9}
+.stack-input{text-align:center;padding-right:14px}
+.stack-input strong{display:block;font-size:86px;font-weight:800;letter-spacing:-.06em;line-height:.95;color:var(--teal-d)}
+.stack-input span{display:block;margin-top:10px;font-size:19px;font-weight:700}
+.stack-models,.stack-branch{display:grid;grid-template-rows:repeat(3,1fr);align-self:stretch}
+.stack-models div,.stack-combine,.stack-output{display:grid;place-items:center;text-align:center;
+  min-height:60px;padding:12px 10px;font-size:21px;font-weight:750;line-height:1.2;border-radius:8px}
+.stack-models div{align-self:center;background:var(--paper);border:1px solid #b7c4ca}
+.stack-combine{min-height:80px;background:var(--teal-l);color:var(--teal-d)}
+.stack-output{min-height:80px;background:var(--navy);color:#fff}
+.stack-branch{position:relative}
+.stack-branch::before{content:'';position:absolute;left:50%;top:calc(100% / 6);
+  bottom:calc(100% / 6);width:2px;background:var(--connector)}
+.stack-branch span,.stack-link{display:block;position:relative;align-self:center;height:2px;background:var(--connector)}
+.stack-branch-out span:not(:nth-child(2)){margin-left:50%}
+.stack-branch-in span:not(:nth-child(2)){margin-right:50%}
+.stack-branch-out span::after,.stack-branch-in span:nth-child(2)::after,.stack-link::after{
+  content:'';position:absolute;right:2px;top:50%;width:8px;height:8px;
+  border-top:2px solid var(--connector);border-right:2px solid var(--connector);transform:translateY(-50%) rotate(45deg)}
 .s6 .b1layer{background:var(--ivory)!important;padding:60px 80px 0!important}
 .s6 h1{font-size:46px}
 .s6grid{display:grid;grid-template-columns:320px 1fr;gap:56px;margin-top:26px;align-items:start}
@@ -615,7 +643,7 @@ h1{margin-bottom:18px}
 /* print: each build on its own page */
 @media print{
   .slide[data-builds]:not(.additive){height:auto!important;padding:0!important;break-after:auto;page-break-after:auto}
-  .slide[data-builds] .b0layer,.slide[data-builds] .b1layer{display:block!important;position:relative!important;inset:auto!important;width:1280px;height:720px;
+  .slide[data-builds] :is(.b0layer,.bmidlayer,.b1layer){display:block!important;position:relative!important;inset:auto!important;width:1280px;height:720px;
     opacity:1!important;visibility:visible!important;transform:none!important;break-after:page;page-break-after:always;overflow:hidden}
   .phone9,.img9,.shadow9,.t9{opacity:1!important;transform:none!important}
 }
@@ -767,6 +795,7 @@ body.controls #notes{bottom:68px!important}
 #notes .nh{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-d);margin-bottom:10px}
 #notes .nh span:last-child{color:var(--muted)}
 #notes p{margin:0}
+#notes .nh + p{white-space:pre-line}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 @media (prefers-reduced-motion:reduce){
@@ -850,8 +879,8 @@ body.controls #notes{bottom:68px!important}
     <div class="rule rv" style="--d:6"></div>
     <div class="q2 rv" style="--d:8">
       <div class="big">2</div><h2>Later-round prediction</h2>
-      <p>Can earlier household conditions add information beyond prior reported payment delay?</p>
-      <div class="flow"><i>Round 1 conditions + prior delay</i><span aria-hidden="true">→</span><i class="o">Round 2 reported delay</i></div>
+      <p>Can earlier household answers improve on a forecast based only on prior reported delay?</p>
+      <div class="flow"><i>Round 1 inputs</i><span aria-hidden="true">→</span><i class="o">Round 2 reported delay</i></div>
     </div>
   </div>
   <p class="limit rv" style="--d:10">We measured self-reported delays. Later reports may include existing delays.</p>
@@ -874,7 +903,7 @@ body.controls #notes{bottom:68px!important}
   </div>
 </section>
 
-<section class="slide s6" data-builds="1" aria-label="Slide 6: How well did the model identify reported delays?">
+<section class="slide s6" data-builds="2" aria-label="Slide 6: How well did the model identify reported delays?">
   <div class="b0layer">
     <div class="tag rv">Identifying delays reported in the same interview</div>
     <h1 class="rv" style="--d:1">How well did the model identify reported delays?</h1>
@@ -902,6 +931,23 @@ body.controls #notes{bottom:68px!important}
     </div>
     <div class="quals6 rv" style="--d:10"><p><b>ROC-AUC measures how well the model ranks cases.</b></p><p class="amber">Holdout reused from earlier checks</p></div>
   </div>
+  <div class="bmidlayer" role="group" aria-label="15-input stacked ensemble">
+    <div class="tag">Same-interview assessment</div>
+    <h1>15-input stacked ensemble</h1>
+    <div class="stack-diagram" role="img" aria-label="The same 15 household inputs go into L2 logistic regression, LightGBM, and CatBoost. A final logistic regression combines the three model scores into one reported-delay score.">
+      <div class="stack-input"><strong>15</strong><span>Household inputs</span></div>
+      <div class="stack-branch stack-branch-out" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="stack-models">
+        <div>L2 logistic regression</div>
+        <div>LightGBM</div>
+        <div>CatBoost</div>
+      </div>
+      <div class="stack-branch stack-branch-in" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="stack-combine"><span>Final logistic<br>regression</span></div>
+      <div class="stack-link" aria-hidden="true"></div>
+      <div class="stack-output"><span>Reported-delay<br>score</span></div>
+    </div>
+  </div>
   <div class="b1layer">
     <div class="tag rv2" style="--d:0">15-input model on 2,262 holdout interviews</div>
     <h1 class="rv2" style="--d:0">At a 0.63 cutoff, it caught three in four reported delays, with 286 false alarms</h1>
@@ -928,7 +974,7 @@ body.controls #notes{bottom:68px!important}
   </div>
 </section>
 
-<section class="slide" aria-label="Slide 7: Earlier household answers added some signal to a later forecast">
+<section class="slide forecast-slide" aria-label="Slide 7: Earlier household answers added some signal to a later forecast">
   <div class="tag rv">Predicting reported delay in the next survey round</div>
   <h1 class="rv" style="--d:1">Earlier household answers added some signal to a later forecast</h1>
   <p class="sub rv" style="--d:2"><b>Holdout ROC-AUC</b> for 361 households</p>
@@ -942,11 +988,13 @@ body.controls #notes{bottom:68px!important}
       <div class="cols">
         <div class="col base"><div class="bar gy" style="height:37.3%;--d:3"></div><div class="vci rv" style="bottom:21%;height:33.7%;--d:15"></div><div class="val num" style="bottom:calc(54.7% + 14px)"><span class="count" data-v="0.612" data-dp="3" data-d="3">0.612</span></div></div>
         <div class="col rf model"><div class="bar gy" style="height:51%;--d:11"></div><div class="vci rv" style="bottom:31%;height:38.7%;--d:15"></div><div class="val num rv" style="bottom:calc(69.7% + 14px);--d:11"><span class="count" data-v="0.653" data-dp="3" data-d="11">0.653</span></div></div>
+        <div class="col stack model"><div class="bar gy" style="height:58.1%;--d:12"></div><div class="vci rv" style="bottom:39.3%;height:36.7%;--d:15"></div><div class="val num rv" style="bottom:calc(76.1% + 14px);--d:12"><span class="count" data-v="0.674" data-dp="3" data-d="12">0.674</span></div></div>
         <div class="col lr model"><div class="bar gy" style="height:58.3%;--d:13"></div><div class="vci rv" style="bottom:39.7%;height:37.3%;--d:15"></div><div class="val num rv" style="bottom:calc(77% + 14px);--d:13"><span class="count" data-v="0.675" data-dp="3" data-d="13">0.675</span></div></div>
       </div>
       <div class="clabels">
         <div>Prior reported delay only<small>Baseline<br>95% CI: 0.563–0.664</small></div>
         <div>Random Forest<small>18 inputs<br>95% CI: 0.593–0.709</small></div>
+        <div>Stacked ensemble<small>15 inputs · retrospective<br>95% CI: 0.618–0.728</small></div>
         <div>Logistic regression<small>21 inputs<br>95% CI: 0.619–0.731</small></div>
       </div>
     </div>
@@ -1139,22 +1187,22 @@ body.controls #notes{bottom:68px!important}
 <script>
 (()=>{
 'use strict';
-/* Presenter notes: three continuous blocks, about 390 seconds of speech. */
+/* Presenter notes: target 6:30 including handoffs and click delays. */
 const NOTES=[
- {p:1,t:15,x:"Good afternoon. Payment history tells a lender what already happened. We asked whether household conditions could add useful information earlier.",r:"Team: Dianne del Pilar, Julius Español, Kimberly Jao, Carlos Perez, Daniel Pollentes. Photo is a generated illustration."},
- {p:1,t:20,x:"In a World Bank survey of Philippine households during the pandemic, pressure showed up in everyday decisions: borrowing from relatives, cutting back on food, and falling behind on payments.",r:"Unweighted analysis of pandemic-era data; not current national prevalence. Behaviors are not a proven sequence. Photo is a generated illustration."},
- {p:1,t:20,x:"So our question was simple. Can household finances tell us more than payment history? If they can, a lender could notice pressure sooner and target support better. Those benefits still need testing.",r:""},
- {p:1,t:20,x:"We asked two separate questions. First, can household answers identify a delay reported in the same interview? Second, can earlier answers help predict a delay reported later? A self-reported delay is not bank delinquency.",r:""},
- {p:1,t:20,x:"Every model was tested on households it had never seen. The identification test used 2,262 interviews from 1,512 households. The forecasting test used 361 households.",r:"Development: 9,055 interviews (identification) and 1,444 households (forecasting)."},
- {p:1,t:50,x:"How well did it work? Our featured model is a 15-input stacked ensemble. Logistic regression, LightGBM, and CatBoost each score a household, and a final logistic regression combines them. On the holdout it scored 0.788, close to the 80-input model at 0.792. ROC-AUC measures ranking, not accuracy, and this holdout had been used before, so treat it as a consistency check. [Click.] At a balanced cutoff of 0.63, it flagged 1,372 interviews. About four in five flags were correct, and it caught three in four reported delays. It also raised 286 false alarms.",r:"Precision 79.2% = 1,086 / 1,372 flagged. Recall 75.2% = 1,086 / 1,444 reported delays. False-alarm rate 35.0% = 286 / 818. Balanced cutoff (Youden's J) set on development out-of-fold predictions before holdout scoring; results apply to this cutoff and sample. Constant-score reference 0.500 is not a scored model."},
- {p:1,t:35,x:"Forecasting is a separate and harder test, on 361 households. Prior delay alone scored 0.612. With household answers added, the Random Forest reached 0.653 and logistic regression 0.675. The point estimates improved, but the size of the gain remains uncertain. Julius will show what we built.",r:"A later report may describe a continuing delay, not a newly missed payment. Do not read overlapping intervals as a significance test."},
- {p:2,t:25,x:"Thank you, Kim. The strongest signal was how many coping actions a household used. Borrowing from family and worry about next month came next. These signals overlap, and they show what the model relies on, not what causes a delay.",r:"Values: 0.040, 0.021, 0.016 (study: 0.04008, 0.02078, 0.01606). The coping count excludes the delayed-payment item and overlaps with individual coping inputs. Permutation importance is not causation or an independent effect."},
- {p:2,t:45,x:"Here is how this could look. [Phone enters.] A customer applies for a loan in six steps: where they live, their work and income, the accounts they use, how they got by when money was tight, how they feel about next month's bills, and a few more questions the model needs. Prefer not to answer is offered on the sensitive questions. [Click.] On the lender side, our prototype scores each applicant and ranks the queue. Sample household PH-009 scores 94 and sits first, with the factors behind it and a suggested next step: offer a financial assessment. It supports a conversation, not a lending decision.",r:"The prototype scores with the 15-input stack refitted on Round 1 and Round 2 interviews only (development cross-validation macro ROC-AUC 0.797, no holdout check), which avoids the disputed Round 3 mapping. Tiers: Low below 63.9, Moderate 63.9 to 86.1, High 86.2 and above. Sample households are fictional. The phone demo on this slide uses the prototype's questions but does not save or score answers."},
- {p:2,t:20,x:"A bank cannot rely on survey answers alone. It would test signals it can already see: falling repayment, rising utilization, repeated cash advances, and weaker inflows. That needs its own model and its own validation.",r:""},
- {p:2,t:30,x:"Here is how a bank team might work the queue, using fictional data. [Click Multiple warning signals.] Four signals flag, so the suggested step is an invitation to discuss payment options. [Click Stable.] No signals, so routine monitoring. A person reviews every case.",r:"Predefined fictional examples; not a trained model. The index is not a probability of default."},
- {p:2,t:25,x:"One example. Repayment falls and utilization rises. A threshold, validated on bank data, flags the account for review, and the customer receives a message like this one. The bank would measure one outcome: whether the minimum payment was missed.",r:"Illustrative message, not approved bank communication. No numerical cutoff proposed. Not produced by the survey model."},
- {p:2,t:30,x:"These results have limits. Households reported their own circumstances, and the data comes from the pandemic. [Click.] Identifying a reported delay is different from predicting a new missed payment. The model also makes false alarms and misses cases, and the ensemble reused an earlier holdout. A flag should start an assessment, not determine a lending decision.",r:"Survey responses may contain reporting error. Unweighted Philippine pandemic-era data. The main model assesses delay reported in the same interview; forecasting is a separate experiment. Changed questionnaire wording requires validation. Operational bank use and business impact require further validation."},
- {p:2,t:35,x:"Before deployment, a pilot should prove that the warning beats the current approach at the same outreach capacity, and that support reduces missed payments against a control group, after costs. [Click.] The opportunity is to use better information to start a better conversation. Our next step is to validate the warning, test the support, and measure whether it improves payment outcomes. See the pressure. Support the person.",r:"Closing photo is a generated illustration, not a project outcome."}
+ {p:1,t:15,x:"Behind every payment record is a household making financial decisions.\nOur question is simple: can those decisions tell us something useful beyond payment history?\nThat is what we explored in Beyond Payment History.\n[Next slide]",r:"Team: Dianne del Pilar, Julius Español, Kimberly Jao, Carlos Perez, Daniel Pollentes. Photo is a generated illustration."},
+ {p:1,t:20,x:"When money becomes tight, households make adjustments.\nThey may borrow from relatives, use savings, or reduce essential spending.\nWe studied these circumstances using the World Bank’s Philippine household survey from 2020 to 2021, when income disruption made these decisions especially relevant.\n[Next slide]",r:"Unweighted analysis of pandemic-era data; not current national prevalence. Behaviors are not a proven sequence. Photo is a generated illustration."},
+ {p:1,t:20,x:"For a lender, the practical question is: who might need a closer look?\nAssessment takes time, and support teams have limited capacity.\nWe wanted to test whether household financial conditions could help prioritize that assessment, with better targeted payment support as the intended business application.\n[Next slide]",r:""},
+ {"presenter": "Julius", "t": 18, "x": "Thanks, Kim. We tested two questions. Can household answers identify a delay reported in the same interview? And can Round 1 answers improve on prior delay alone when predicting what households report in Round 2?", "r": "Both outcomes are survey reports. A Round 2 report can describe a delay that was already underway."},
+ {"presenter": "Julius", "t": 18, "x": "We kept each household together when we split the data. The Round 1 and 2 identification refit used 7,358 interviews and grouped cross-validation. The separate forecasting test used 361 held-out households.", "r": "The identification counts on this slide are from the historical three-round evaluation. The Round 1 and 2 refit used 7,358 interviews from 5,988 households. Its estimates come from development cross-validation."},
+ {"presenter": "Julius", "t": 45, "steps": [{"t": 20, "x": "The chart shows our historical comparison. In the Round 1 and 2 refit, the stack scored 0.797, and logistic regression with the same inputs scored 0.793. Those scores measure ranking across validation folds. [Next build: ensemble diagram.]", "r": "The chart's historical 0.788 and 0.792 use the older Round 3 mapping. The 0.797 and 0.793 are macro ROC-AUC from the matched Round 1 and 2 development folds."}, {"t": 10, "x": "The same 15 inputs go into logistic regression, LightGBM, and CatBoost. One final logistic regression combines their scores. [Next build: cutoff example.]", "r": "Inputs: coping count, family borrowing, institutional borrowing, credit purchases, pawning, insurance, food cutbacks, non-food cutbacks, financial worry, worry about having enough food, government cash assistance amount, remittance source, region, broad area, and household head's education. The final model combines predicted log-odds."}, {"t": 15, "x": "This historical matrix illustrates the cutoff trade-off. In the Round 1 and 2 evaluation, about 82 percent of flags reported a delay, and the model caught about 75 percent of reported delays.", "r": "The slide shows the historical 0.63 cutoff. The spoken figures refer to the Round 1 and 2 development out-of-fold predictions at 0.639: 3,614 true positives, 798 false positives, 1,182 false negatives, and 1,764 true negatives."}]},
+ {"presenter": "Julius", "t": 30, "x": "For Round 2 forecasting, prior delay alone scored 0.612. Random Forest reached 0.653. In a retrospective check, the 15-input stack reached 0.674, very close to logistic regression at 0.675. Logistic regression included prior delay. The gain over the baseline is uncertain, and a later report can describe a delay that was already underway.", "r": "All results use the same 361 households. The stack and Random Forest omit prior delay. The stack refit excluded the 361 households, but 285 appeared in earlier feature development."},
+ {"presenter": "Julius", "t": 22, "x": "The stack uses how many coping actions households took, whether they borrowed from family or friends, and how worried they were about next month. The ranking on screen came from the historical model. Kim will show how the prototype uses survey answers to organize a review queue.", "r": "The display shows historical permutation importance. These inputs are examples for the Round 1 and 2 refit. Their ranking has not been verified for that refit."},
+ {p:2,t:45,x:"Here is how we could make the experience practical.\n[Allow the phone reveal to finish]\nFor the customer, we propose a short financial check-in using neutral questions about household circumstances.\n[Demonstrate one step only]\nWe explain why we ask, allow answers to be reviewed, and avoid suggesting that there is a ‘good’ answer. Revised wording would still need validation.\n[Reveal lender desktop]\nFor the lender, the information becomes an assessment queue.\nThe score helps organize whom to review. It does not automatically select a loan or determine a credit decision.\nThe sample scores shown here are separate from the redesigned questionnaire. The questionnaire demonstration does not calculate a new score.\n[Next slide]",r:"The prototype scores with the 15-input stack refitted on Round 1 and Round 2 interviews only (development cross-validation macro ROC-AUC 0.797, no holdout check), which avoids the disputed Round 3 mapping. Tiers: Low below 63.9, Moderate 63.9 to 86.1, High 86.2 and above. Sample households are fictional. The phone demo on this slide uses the prototype's questions but does not save or score answers."},
+ {p:2,t:20,x:"For banks, a scalable extension would use account behavior already available to them.\nCandidates include declining repayment relative to balance, rising utilization, repeated cash advances, and weaker inflows.\nThese require a separate bank-data model. We cannot simply replace survey answers with transactions and assume the results carry over.\n[Next slide]",r:""},
+ {p:2,t:30,x:"This dashboard illustrates that proposed workflow.\n[Select an emerging-pressure customer]\nThe lender sees the account changes behind an alert and reviews the appropriate next step.\n[Select a customer with multiple signals]\nThat might be an invitation to discuss payment options.\nThese are fictional examples with predefined scores. The purpose is to demonstrate the decision process, not claim that we have already built a validated transaction-based bank model.\n[Next slide]",r:"Predefined fictional examples; not a trained model. The index is not a probability of default."},
+ {p:2,t:25,x:"A useful alert needs a clear path to action.\n[Reveal observed signals]\nAccount behavior changes.\n[Reveal trigger]\nA separately validated threshold flags the account for review.\n[Reveal support message]\nThe customer receives a timely invitation to explore payment options.\nFor this bank extension, we would define the outcome precisely: whether the minimum amount due is paid by the next deadline.\n[Next slide]",r:"Illustrative message, not approved bank communication. No numerical cutoff proposed. Not produced by the survey model."},
+ {"presenter": "Julius", "t": 25, "x": "Thanks, Kim. These were self-reports from the pandemic. We still need to evaluate performance with today's bank customers. [Next build: remaining limitations.] A reported delay may already be underway, and any cutoff will miss some cases and raise false alarms. A flag should start an assessment.", "r": "Same-interview assessment, forecasting a later survey report, and predicting a new missed bank payment are distinct outcomes."},
+ {"presenter": "Julius", "t": 32, "x": "We recommend a bank-data pilot. First, see whether the warning catches more missed payments than the current process at the same outreach capacity. Then test whether the support reduces missed payments against a control group and delivers value after costs. [Next build: closing image. Pause.] See the pressure. Support the person. Thank you.", "r": "The first step tests the warning. The second tests what happens after outreach."}
 ];
 
 const $=s=>document.querySelector(s);
@@ -1205,10 +1253,15 @@ function play(s){
 let current=0;
 function setBuild(s,b){
   if(!s.dataset.builds) return;
-  s.dataset.build=b; s.classList.toggle('b1',b>=1);
-  const l0=s.querySelector('.b0layer'), l1=s.querySelector('.b1layer');
+  const l0=s.querySelector('.b0layer'), middle=s.querySelector('.bmidlayer'), l1=s.querySelector('.b1layer');
+  const showMiddle=Boolean(middle)&&b===1;
+  const showFinal=b>=(middle?2:1);
+  s.dataset.build=b;
+  s.classList.toggle('bmid',showMiddle);
+  s.classList.toggle('b1',showFinal);
   if(l0){l0.inert=b>=1;l0.setAttribute('aria-hidden',String(b>=1))}
-  if(l1){l1.inert=b<1;l1.setAttribute('aria-hidden',String(b<1))}
+  if(middle){middle.inert=!showMiddle;middle.setAttribute('aria-hidden',String(!showMiddle))}
+  if(l1){l1.inert=!showFinal;l1.setAttribute('aria-hidden',String(!showFinal))}
 }
 function renderCounter(){
   const s=slides[current], max=+(s.dataset.builds||0);
@@ -1233,20 +1286,21 @@ function show(n,dir){
 }
 function next(){
   const s=slides[current], max=+(s.dataset.builds||0), b=+(s.dataset.build||0);
-  if(b<max){ setBuild(s,b+1); renderCounter(); return; }
+  if(b<max){ setBuild(s,b+1); renderCounter(); renderNotes(); return; }
   if(current<N-1) show(current+1,1);
 }
 function prev(){
   const s=slides[current], b=+(s.dataset.build||0);
-  if(b>0){ setBuild(s,b-1); renderCounter(); return; }
+  if(b>0){ setBuild(s,b-1); renderCounter(); renderNotes(); return; }
   if(current>0) show(current-1,-1);
 }
 function renderNotes(){
   const n=NOTES[current];
-  const block=NOTES.filter(x=>x.p===n.p);
-  const idx=block.indexOf(n)+1;
+  const presenter=n.presenter??'Kim';
+  const block=NOTES.filter(x=>(x.presenter??'Kim')===presenter);
   const blockTotal=block.reduce((a,b)=>a+b.t,0);
-  $('#notes').innerHTML=`<div class="nh"><span>${n.p===1?'Kim':'Julius'} · slide ${idx} of ${block.length}</span> <span>${n.t}s · block ${Math.floor(blockTotal/60)}:${String(blockTotal%60).padStart(2,'0')}</span></div><p>${esc(n.x)}</p>${n.r?'<p class="ref">'+esc(n.r)+'</p>':''}`;
+  const note=n.steps?.[+(slides[current].dataset.build||0)]||n;
+  $('#notes').innerHTML=`<div class="nh"><span>${presenter} · slide ${current+1} of ${N}</span> <span>${note.t}s · block ${Math.floor(blockTotal/60)}:${String(blockTotal%60).padStart(2,'0')}</span></div><p>${esc(note.x)}</p>${note.r?'<p class="ref">'+esc(note.r)+'</p>':''}`;
 }
 function resize(){
   const s=Math.min(innerWidth/1280,(innerHeight-(document.body.classList.contains('controls')?56:0))/720);
